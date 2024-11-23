@@ -1,7 +1,7 @@
 {
   "name": "react-qrcode-scanner-mi",
   "version": "1.0.0",
-  "description": "Made with create-react-library",
+  "description": "A simple QR code scanner component for React.",
   "author": "miteshdevg",
   "license": "MIT",
   "repository": "miteshdevg/react-qrcode-scanner-mi",
