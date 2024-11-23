@@ -1,17 +1,3 @@
-// // export default App;
-// import React from 'react';
-// // import QRCodeScanner from 'react-qrcode-scanner-mi';  // Default import
-// import { QrScanner } from 'react-qrcode-scanner-mi';  // Correct named import
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <QrScanner />
-//     </div>
-//   );
-// }
-
-// export default App;
 import React, { useState } from 'react';
 import { QrScanner } from 'react-qrcode-scanner-mi';  // Correct named import
 
