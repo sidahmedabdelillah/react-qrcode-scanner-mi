@@ -23,6 +23,16 @@
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build"
   },
+  "keywords": [
+    "react",
+    "qr-code",
+    "qr-code-scanner",
+    "scanner",
+    "react-library",
+    "react-qr-code",
+    "javascript",
+    "qrcode"
+  ],
   "peerDependencies": {
     "react": "^16.0.0"
   },
