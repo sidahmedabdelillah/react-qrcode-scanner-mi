@@ -1,6 +1,6 @@
 {
   "name": "react-qrcode-scanner-mi",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A simple QR code scanner component for React.",
   "author": "miteshdevg",
   "license": "MIT",
@@ -34,7 +34,7 @@
     "qrcode"
   ],
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^16.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "microbundle-crl": "^0.13.10",
