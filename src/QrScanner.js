@@ -63,54 +63,58 @@
 
 // export default QrScanner;
 
-import React, { useEffect, useRef } from 'react';
-import jsQR from 'jsqr';
+import React, { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import jsQR from "jsqr";
 
-const QRCodeScanner = ({ onScan, onError, width = 300, height = 300 }) => {
+export const QrScanner = ({ onScan, onError, cameraMode = "environment" }) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
 
-    // Start scanner
     useEffect(() => {
-        const startScanner = async () => {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'environment' },
+        const startScanner = () => {
+            navigator.mediaDevices
+                .getUserMedia({
+                    video: {
+                        facingMode: cameraMode, // Use the cameraMode prop here
+                    },
+                })
+                .then((stream) => {
+                    if (videoRef.current) videoRef.current.srcObject = stream;
+                })
+                .catch((err) => {
+                    if (onError) onError(err);
                 });
-                if (videoRef.current) videoRef.current.srcObject = stream;
-            } catch (err) {
-                if (onError) onError(err);
-            }
         };
 
         startScanner();
 
-        // Clean up when component unmounts
         return () => {
             if (videoRef.current && videoRef.current.srcObject) {
                 const tracks = videoRef.current.srcObject.getTracks();
-                tracks.forEach(track => track.stop());
+                tracks.forEach((track) => track.stop());
             }
         };
-    }, [onError]);
+    }, [cameraMode, onError]); // Re-run when cameraMode changes
 
-    // Scan QR code continuously
     useEffect(() => {
         const scanQRCode = () => {
             const canvas = canvasRef.current;
             const video = videoRef.current;
+
             if (!canvas || !video) return;
 
-            const ctx = canvas.getContext('2d');
-            canvas.width = width;
-            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            canvas.width = 300; // Default width
+            canvas.height = 300; // Default height
 
             if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                ctx.drawImage(video, 0, 0, width, height);
-                const imageData = ctx.getImageData(0, 0, width, height);
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 const code = jsQR(imageData.data, imageData.width, imageData.height);
+
                 if (code && onScan) {
-                    onScan(code.data); // Pass scanned value to the onScan function
+                    onScan(code.data); // Pass the scanned value
                 }
             }
 
@@ -118,14 +122,18 @@ const QRCodeScanner = ({ onScan, onError, width = 300, height = 300 }) => {
         };
 
         scanQRCode();
-    }, [onScan, width, height]);
+    }, [onScan]);
 
     return (
         <div>
-            <video ref={videoRef} autoPlay style={{ display: 'none' }} />
+            <video ref={videoRef} autoPlay style={{ display: "none" }} />
             <canvas ref={canvasRef} />
         </div>
     );
 };
 
-export default QRCodeScanner;
+QrScanner.propTypes = {
+    onScan: PropTypes.func.isRequired,
+    onError: PropTypes.func,
+    cameraMode: PropTypes.oneOf(["user", "environment"]), // Add prop validation
+};
