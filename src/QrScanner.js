@@ -67,7 +67,7 @@ import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import jsQR from "jsqr";
 
-export const QrScanner = ({ onScan, onError, cameraMode = "environment" }) => {
+const QrScanner = ({ onScan, onError, cameraMode = "environment" }) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
 
@@ -137,3 +137,4 @@ QrScanner.propTypes = {
     onError: PropTypes.func,
     cameraMode: PropTypes.oneOf(["user", "environment"]), // Add prop validation
 };
+export default QrScanner;
