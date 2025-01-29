@@ -67,7 +67,7 @@ import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import jsQR from "jsqr";
 
-const QrScanner = ({ onScan, onError, cameraMode = "environment", width, heigth}) => {
+const QrScanner = ({ onScan, onError, cameraMode = "environment", width, height}) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
 
