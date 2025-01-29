@@ -67,7 +67,7 @@ import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import jsQR from "jsqr";
 
-const QrScanner = ({ onScan, onError, cameraMode = "environment" }) => {
+const QrScanner = ({ onScan, onError, cameraMode = "environment", width, heigth}) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
 
@@ -105,8 +105,8 @@ const QrScanner = ({ onScan, onError, cameraMode = "environment" }) => {
             if (!canvas || !video) return;
 
             const ctx = canvas.getContext("2d");
-            canvas.width = 300; // Default width
-            canvas.height = 300; // Default height
+            canvas.width = width ?? 300; 
+            canvas.height = height ?? 300;
 
             if (video.readyState === video.HAVE_ENOUGH_DATA) {
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
